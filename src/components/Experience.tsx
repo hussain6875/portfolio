@@ -15,7 +15,7 @@ const Experience = () => {
       'Implemented responsive designs and user-friendly interfaces',
       'Worked with PostgreSQL and MongoDB databases',
       'Participated in code reviews and agile development processes',
-      'Gained experience in version control with Git and GitHub'
+      'Gained experience in version control with Git, GitLab and GitHub'
     ],
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'JavaScript', 'TypeScript']
   };

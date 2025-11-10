@@ -6,9 +6,9 @@ const Skills = () => {
     {
       title: 'Frontend',
       skills: [
-        { name: 'JavaScript', level: 90 },
+        { name: 'JavaScript', level: 85 },
         { name: 'TypeScript', level: 85 },
-        { name: 'React.js', level: 90 },
+        { name: 'React.js', level: 85 },
         { name: 'Redux/Redux Toolkit', level: 85 },
         { name: 'HTML5', level: 95 },
         { name: 'CSS3', level: 90 },
@@ -18,7 +18,7 @@ const Skills = () => {
     {
       title: 'Backend',
       skills: [
-        { name: 'Node.js', level: 85 },
+        { name: 'Node.js', level: 90 },
         { name: 'Express.js', level: 85 },
         { name: 'RESTful APIs', level: 90 },
         { name: 'JWT Authentication', level: 80 },
@@ -37,11 +37,11 @@ const Skills = () => {
     {
       title: 'Tools & Others',
       skills: [
-        { name: 'Git & GitHub', level: 90 },
+        { name: 'Git, GitLab & GitHub', level: 80 },
         { name: 'VS Code', level: 95 },
-        { name: 'Postman', level: 85 },
-        { name: 'npm/yarn', level: 90 },
-        { name: 'Responsive Design', level: 90 },
+        { name: 'Postman', level: 80 },
+        { name: 'npm/yarn', level: 80 },
+        { name: 'Responsive Design', level: 85 },
       ]
     }
   ];

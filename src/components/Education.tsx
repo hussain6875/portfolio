@@ -7,7 +7,7 @@ const Education = () => {
     degree: 'Bachelor of Arts',
     field: 'Arabic Language and Literature',
     university: 'University of Calicut',
-    duration: '2020 - 2023',
+    duration: '2019 - 2022',
     location: 'Kerala, India',
     description: 'Completed undergraduate studies with a focus on Arabic language, literature, and cultural studies. This diverse educational background has enhanced my analytical thinking and communication skills.',
     highlights: [
@@ -108,8 +108,7 @@ const Education = () => {
                     </div>
                     <h4 className="text-lg font-semibold text-white mb-2">Academic Excellence</h4>
                     <p className="text-gray-400 text-sm">
-                      Developed strong analytical and communication skills through comprehensive study of language and literature.
-                    </p>
+Strengthened analytical and communication skills through an in-depth study of language and literature.                    </p>
                   </div>
                 </div>
               </div>
