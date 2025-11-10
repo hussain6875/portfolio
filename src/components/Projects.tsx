@@ -49,6 +49,8 @@ const Projects = () => {
         JWT: <Code className="h-4 w-4" />,
         "Tailwind CSS": <Globe className="h-4 w-4" />,
         Bootstrap: <Globe className="h-4 w-4" />,
+        'Multer': <Code className="h-4 w-4" />,
+
     };
 
     return (
