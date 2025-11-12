@@ -4,7 +4,25 @@ import { Github, ExternalLink, Code, Database, Globe } from "lucide-react";
 
 const Projects = () => {
     const projects = [
+      
         {
+            title: "LocalService Platform",
+            description:
+                "A scalable full-stack web application that connects local service providers with customers. Implements three user roles — Customer, Provider, and Admin — each with dynamic dashboards and real-time booking updates. Customers can book services easily, track booking status, and leave reviews only after service completion.",
+            techStack: ["React", "Redux Toolkit", "Tailwind CSS", "Node.js", "Express", "PostgreSQL", "JWT", "Multer"],
+            features: [
+                "Role-based access control (Customer, Provider, Admin)",
+                "Easy service booking system with status tracking",
+                "Provider dashboard for managing services and bookings",
+                "Admin dashboard for monitoring all users and activities",
+                "Customer review system available after booking completion",
+            ],
+            github: "https://github.com/hussain6875/lsb_backend",
+            live: "https://lsb-frontend.vercel.app/",
+            image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
+            category: "Full Stack",
+        },
+          {
             title: "CRM System",
             description:
                 "A comprehensive Customer Relationship Management platform designed to streamline client interactions, track sales progress, and optimize business performance. The system includes multiple data-driven modules and real-time activity tracking for effective lead and deal management.",
@@ -19,24 +37,7 @@ const Projects = () => {
             live: "https://example.com",
             image: "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800",
             category: "Full Stack",
-        },
-        {
-            title: "LocalService Platform",
-            description:
-                "A scalable full-stack web application that connects local service providers with customers. Implements three user roles — Customer, Provider, and Admin — each with dynamic dashboards and real-time booking updates. Customers can book services easily, track booking status, and leave reviews only after service completion.",
-            techStack: ["React", "Redux Toolkit", "Tailwind CSS", "Node.js", "Express", "PostgreSQL", "JWT", "Multer"],
-            features: [
-                "Role-based access control (Customer, Provider, Admin)",
-                "Easy service booking system with status tracking",
-                "Provider dashboard for managing services and bookings",
-                "Admin dashboard for monitoring all users and activities",
-                "Customer review system available after booking completion",
-            ],
-            github: "https://github.com/hussain6875/lsb_backend",
-            live: "https://example.com",
-            image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
-            category: "Full Stack",
-        },
+        }
     ];
 
     const techIcons = {
