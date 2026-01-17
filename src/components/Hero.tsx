@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Download, ArrowDown } from "lucide-react";
 
@@ -93,7 +92,7 @@ const Hero = () => {
                     </div>
 
                     <motion.a
-                        href="/hussain_resume.pdf"
+                        href="/hussain.pdf"
                         download="Muhammed_Hussain_Resume.pdf"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

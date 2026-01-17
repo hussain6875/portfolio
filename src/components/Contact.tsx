@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Github, Linkedin } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ interface ContactForm {
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>();
 
   const contactInfo = [
@@ -52,11 +53,31 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactForm) => {
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Form submitted:', data);
-    reset();
-    setIsSubmitting(false);
+    
+    // Google Form URL
+    const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfExv5dwcL9uCHpKAvZytH5uMN0tWfHeXZYCIzgDXCi3ZIlvQ/formResponse";
+
+    // Mapping entry IDs from your DOM
+    const formData = new FormData();
+    formData.append("entry.1605774345", data.name);
+    formData.append("entry.1693361149", data.email);
+    formData.append("entry.2130870660", data.subject);
+    formData.append("entry.695534756", data.message);
+
+    try {
+      await fetch(GOOGLE_FORM_URL, {
+        method: "POST",
+        mode: "no-cors", // Required to avoid CORS issues with Google Forms
+        body: formData,
+      });
+      setSubmitted(true);
+      reset();
+    } catch (error) {
+      console.error("Error submitting form", error);
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitted(false), 5000);
+    }
   };
 
   return (
@@ -149,92 +170,102 @@ const Contact = () => {
             viewport={{ once: true }}
             className="glass p-8 rounded-2xl"
           >
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {submitted ? (
+              <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-20">
+                <div className="bg-green-500/20 p-4 rounded-full">
+                  <Send className="h-8 w-8 text-green-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
+                <p className="text-gray-400">Thanks for reaching out. I'll get back to you soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                      Name
+                    </label>
+                    <input
+                      {...register('name', { required: 'Name is required' })}
+                      type="text"
+                      className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
+                      placeholder="Your name"
+                    />
+                    {errors.name && (
+                      <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                      Email
+                    </label>
+                    <input
+                      {...register('email', {
+                        required: 'Email is required',
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: 'Invalid email address'
+                        }
+                      })}
+                      type="email"
+                      className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
+                      placeholder="your@email.com"
+                    />
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                    )}
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                    Name
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                    Subject
                   </label>
                   <input
-                    {...register('name', { required: 'Name is required' })}
+                    {...register('subject', { required: 'Subject is required' })}
                     type="text"
                     className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
-                    placeholder="Your name"
+                    placeholder="What's this about?"
                   />
-                  {errors.name && (
-                    <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+                  {errors.subject && (
+                    <p className="mt-1 text-sm text-red-400">{errors.subject.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                    Message
                   </label>
-                  <input
-                    {...register('email', {
-                      required: 'Email is required',
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: 'Invalid email address'
-                      }
-                    })}
-                    type="email"
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
-                    placeholder="your@email.com"
+                  <textarea
+                    {...register('message', { required: 'Message is required' })}
+                    rows={5}
+                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400 resize-none"
+                    placeholder="Tell me about your project or just say hello..."
                   />
-                  {errors.email && (
-                    <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
                   )}
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                  Subject
-                </label>
-                <input
-                  {...register('subject', { required: 'Subject is required' })}
-                  type="text"
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="What's this about?"
-                />
-                {errors.subject && (
-                  <p className="mt-1 text-sm text-red-400">{errors.subject.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  {...register('message', { required: 'Message is required' })}
-                  rows={5}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400 resize-none"
-                  placeholder="Tell me about your project or just say hello..."
-                />
-                {errors.message && (
-                  <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
-                )}
-              </div>
-
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:shadow-lg hover:shadow-blue-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" />
-                    <span>Send Message</span>
-                  </>
-                )}
-              </motion.button>
-            </form>
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:shadow-lg hover:shadow-blue-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4" />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>
